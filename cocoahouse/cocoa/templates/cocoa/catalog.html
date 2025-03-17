@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load menu_tags %}
+{% block content %}
+<h1>{{title}}</h1>
+
+<div class="categories">
+        {% show_categories %}
+    </div>
+
+{% endblock %}

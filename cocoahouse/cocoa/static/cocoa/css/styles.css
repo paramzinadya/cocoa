@@ -1,0 +1,316 @@
+/* Общие стили */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FFFAFA;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Стили для <li>, чтобы выровнять элементы по центру */
+li {
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* Расположить элементы по вертикали */
+    align-items: center; /* Выровнять все элементы по центру */
+    justify-content: center; /* Центрировать по вертикали внутри <li> */
+    margin-bottom: 20px; /* Добавить отступ между постами */
+}
+
+/* Стили для верхнего меню */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #222;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+ul li {
+    padding: 15px 20px;
+}
+
+ul li a {
+    color: #ddd; /* Светлый текст */
+    text-decoration: none;
+    transition: color 0.3s;
+    display: block; /* Убирает белый фон */
+    padding: 10px 15px;
+}
+
+ul li a:hover {
+    color: #ffcc00; /* Цвет при наведении */
+}
+
+/* Контент */
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #8B4513;
+    font-size: 50px;
+}
+
+h2 {
+    color: #DCDCDC;
+    text-align: center;
+}
+
+/* Контент */
+p {
+    text-align: center;
+    line-height: 1.6;
+    padding: 5px;
+    color: #A9A9A9;
+    width: 80%; /* Фиксированная ширина, можно изменить на нужное значение */
+    max-width: 600px; /* Ограничение ширины для больших экранов */
+    margin: 0 auto; /* Центрирование */
+}
+
+p a {
+    display: inline-block;
+    background-color: #333; /* Темный фон */
+    color: #fff; /* Светлый текст */
+    padding: 10px 20px; /* Одинаковый отступ */
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    width: 200px; /* Фиксированная ширина */
+    text-align: center;
+    margin-top: 10px; /* Добавить отступ сверху для кнопки */
+    margin: auto;
+
+}
+
+/* Темнее при наведении */
+p a:hover {
+    background-color: #000;
+}
+
+/* Стили для картинки в левом верхнем углу */
+.logo {
+    position: absolute;
+    top: 0px; /* Отступ от верхнего края */
+    left: 10px; /* Отступ от левого края */
+    width: 150px; /* Ширина картинки */
+    height: auto; /* Пропорциональное изменение высоты */
+    z-index: 10; /* Обеспечит, что картинка будет сверху */
+}
+
+/* Стили для картинки в левом верхнем углу */
+.badian {
+    position: absolute;
+    top: 100px; /* Отступ от верхнего края */
+    right: 0px; /* Отступ от левого края */
+    width: 100px; /* Ширина картинки */
+    height: auto; /* Пропорциональное изменение высоты */
+    z-index: 35; /* Обеспечит, что картинка будет сверху */
+}
+
+/* Навигационное меню внутри страниц */
+nav {
+    text-align: center;
+    margin: 20px 0;
+}
+
+nav a {
+    color: #333; /* Тёмный текст */
+    text-decoration: none;
+    font-size: 18px;
+    margin: 0 15px;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #ff6600; /* Оранжевый цвет при наведении */
+}
+
+/* Общие стили */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FFFAFA;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Контейнер для контента */
+.content-container {
+    flex: 1;
+    width: 80%;
+    max-width: 1000px;
+    margin: 20px auto;
+}
+
+/* Футер */
+.footer {
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 30px;
+}
+
+.footer-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.footer-categories {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.footer-categories li {
+    margin: 5px 15px;
+}
+
+.footer-categories li a {
+    color: #ddd;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.footer-categories li a:hover {
+    color: #ffcc00;
+}
+
+/* Текст в футере */
+.footer p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #bbb;
+}
+
+/* Убираем черный фон, если он идет из base.html или других стилей */
+.categories {
+    display: flex;
+    justify-content: space-between; /* Категории с равными отступами по горизонтали */
+    flex-wrap: wrap; /* Элементы могут переходить на новую строку */
+    gap: 20px; /* Пробел между элементами */
+    margin: 30px 0;
+    background-color: white !important; /* Убираем черный фон, с использованием !important */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Мягкая тень */
+}
+
+/* Стили для списка категорий */
+.menu_items-list {
+    display: flex;
+    flex-wrap: wrap; /* Элементы на разных строках */
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* Стили для элементов списка */
+.menu_items-list li {
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    width: calc(33.33% - 20px); /* Для 3 элементов в ряду */
+    text-align: center;
+}
+
+/* Стили для ссылок */
+.menu_items-list li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    display: block;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+/* Эффект при наведении на элемент */
+.menu_items-list li:hover {
+    background-color: #ffcc00;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+/* Эффект при наведении на ссылку */
+.menu_items-list li a:hover {
+    color: white;
+}
+
+/* Стили для мобильных экранов, по 3 элемента в ряд */
+@media (max-width: 768px) {
+    .menu_items-list li {
+        width: calc(33.33% - 20px); /* Три элемента в ряд на экранах до 768px */
+    }
+}
+
+/* Стили для очень маленьких экранов */
+@media (max-width: 480px) {
+    .menu_items-list li {
+        width: calc(50% - 20px); /* 2 элемента в ряд на очень маленьких экранах */
+    }
+}
+
+/* Стили для страницы "О сайте" */
+.about-content {
+    background-color: #f9f9f9;
+    padding: 40px;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px; /* Ограничиваем ширину блока */
+    line-height: 1.6;
+}
+
+/* Заголовок страницы "О сайте" */
+.about-content h1 {
+    font-size: 2rem;
+    color: #4b2e39;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Абзацы */
+.about-content p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Добавляем стили для первого абзаца */
+.about-content p:first-of-type {
+    font-weight: bold;
+}
+
+/* Эффект при наведении на контент */
+.about-content:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+}
+
+/* Адаптивность: уменьшение шрифта и отступов на мобильных устройствах */
+@media (max-width: 768px) {
+    .about-content {
+        padding: 20px;
+        margin: 15px;
+    }
+
+    .about-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .about-content p {
+        font-size: 0.95rem;
+    }
+}

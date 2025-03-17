@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'cocoa/includes/nav.html' %}
+{% load static %}
+
+
+<h1>{{title}}</h1>
+<ul>
+ {% for p in posts %}
+ {% if p.is_published %}
+ <li>
+ <h2>{{p.title}}</h2>
+ <p >{% autoescape off %}
+{{p.content|linebreaks|truncatewords:50}}
+{% endautoescape %}</p>
+ <p ><a href="{% url 'post' p.id
+%}">Перейти в каталог</a></p>
+ {% if not forloop.last %}
+
+ {% endif %}
+ </li>
+ {% endif %}
+ {% endfor %}
+</ul>
+<img src="{% static 'cocoa/images/badian.png' %}" alt="Бадьян" class="badian">
+{% include 'cocoa/includes/nav.html' %}
+
+
+
+{% endblock %}
