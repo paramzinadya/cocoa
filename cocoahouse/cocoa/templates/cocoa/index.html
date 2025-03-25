@@ -7,19 +7,13 @@
 <h1>{{title}}</h1>
 <ul>
  {% for p in posts %}
- {% if p.is_published %}
  <li>
  <h2>{{p.title}}</h2>
  <p >{% autoescape off %}
 {{p.content|linebreaks|truncatewords:50}}
 {% endautoescape %}</p>
- <p ><a href="{% url 'post' p.id
-%}">Перейти в каталог</a></p>
- {% if not forloop.last %}
-
- {% endif %}
+ <p class="link-readpost"><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
  </li>
- {% endif %}
  {% endfor %}
 </ul>
 <img src="{% static 'cocoa/images/badian.png' %}" alt="Бадьян" class="badian">

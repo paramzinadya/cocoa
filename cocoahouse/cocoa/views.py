@@ -4,20 +4,16 @@ from django.template.loader import render_to_string
 
 
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+
+from cocoa.models import Post
 
 main_menu = [{'title': "О сайте", 'url_name': 'about'},
  {'title': "Каталог", 'url_name': 'catalog'},
  {'title': "Сезонное меню", 'url_name': 'seasons'},
  {'title': "Обратная связь", 'url_name': 'contact'},
  {'title': "Войти", 'url_name': 'login'}
-]
-
-data_db = [
- {'id': 1, 'title': 'Фирменное какао', 'content': 'Наше какао — это уют в каждой чашке! Богатый шоколадный вкус, нежная текстура и согревающий аромат делают его идеальным напитком для любого момента. Попробуйте и ощутите настоящее наслаждение!', 'is_published': True},
- {'id': 2, 'title': 'Свежая выпечка', 'content': 'Хрустящие круассаны, мягкие булочки и ароматные пирожки — каждое утро мы готовим свежую выпечку для вас! Заходите за теплом и вкусом прямо из печи.', 'is_published': True},
- {'id': 3, 'title': 'Любимые десерты', 'content': 'Торты, эклеры, чизкейки — у нас есть десерт для каждого сладкоежки! Побалуйте себя любимыми вкусами и окунитесь в мир удовольствия.', 'is_published': True},
 ]
 
 cats_db = [
@@ -28,12 +24,14 @@ cats_db = [
 ]
 
 def index(request):
+ posts = Post.published.all()
  data = {
-     'title': 'COCOA HOUSE',
-     'main_menu': main_menu,
-     'posts': data_db,
+ 'title': 'Главная страница',
+ 'main_menu': main_menu,
+ 'posts': posts,
  }
  return render(request, 'cocoa/index.html', context=data)
+
 
 def about(request):
  return render(request, 'cocoa/about.html',{'title': 'О сайте', 'main_menu': main_menu})
@@ -50,8 +48,17 @@ def contact(request):
 def login(request):
  return HttpResponse("Вход в аккаунт")
 
-def show_post(request, post_id):
- return HttpResponse(f"Отображение статьи с id ={post_id}")
+
+def show_post(request, post_slug):
+ post = get_object_or_404(Post, slug=post_slug)
+ data = {
+ 'title': post.title,
+ 'menu': menu,
+ 'post': post,
+ 'cat_selected': 1,
+ }
+ return render(request, 'cocoa/post.html',
+context=data)
 
 def menu(request):
     return HttpResponse(f"<h1>Меню</h1>")
@@ -78,10 +85,15 @@ def category_merch(request):
 def category_gift_sets(request):
  return HttpResponse("Подарочные наборы")
 
-
 def show_category(request, cat_id):
- """Функция-заглушка"""
- return index(request)
+ data = {
+ 'title': 'Отображение по рубрикам',
+ 'main_menu': main_menu,
+ 'posts': Post.published.all(),
+ 'cat_selected': cat_id,
+ }
+ return render(request, 'women/index.html',
+context=data)
 
 def menu_slug(request,cat_slug):
     if request.GET:
