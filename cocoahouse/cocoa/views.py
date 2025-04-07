@@ -7,20 +7,13 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
-from cocoa.models import Post
+from cocoa.models import Post, Category
 
 main_menu = [{'title': "О сайте", 'url_name': 'about'},
  {'title': "Каталог", 'url_name': 'catalog'},
  {'title': "Сезонное меню", 'url_name': 'seasons'},
  {'title': "Обратная связь", 'url_name': 'contact'},
  {'title': "Войти", 'url_name': 'login'}
-]
-
-cats_db = [
- {'id': 1, 'name': 'Акции'},
- {'id': 2, 'name': 'Подарки'},
- {'id': 3, 'name': 'Адреса'},
- {'id': 4, 'name': 'Соц.сети'},
 ]
 
 def index(request):
@@ -85,15 +78,18 @@ def category_merch(request):
 def category_gift_sets(request):
  return HttpResponse("Подарочные наборы")
 
-def show_category(request, cat_id):
+def show_category(request, cat_slug):
+ category = get_object_or_404(Category,slug=cat_slug)
+ posts = Post.published.filter(cat_id=category.pk)
  data = {
- 'title': 'Отображение по рубрикам',
- 'main_menu': main_menu,
- 'posts': Post.published.all(),
- 'cat_selected': cat_id,
+ 'title': f'Рубрика: {category.name}',
+ 'menu': menu,
+ 'posts': posts,
+ 'cat_selected': category.pk,
  }
  return render(request, 'women/index.html',
 context=data)
+
 
 def menu_slug(request,cat_slug):
     if request.GET:

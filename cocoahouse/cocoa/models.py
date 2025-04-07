@@ -11,6 +11,9 @@ class Category(models.Model):
  def __str__(self):
   return self.name
 
+ def get_absolute_url(self):
+  return reverse('category', kwargs={'cat_slug':self.slug})
+
 class PublishedModel(models.Manager):
  def get_queryset(self):
   return super().get_queryset().filter(is_published=Post.Status.PUBLISHED)
@@ -28,7 +31,7 @@ class Post(models.Model):
  is_published = models.BooleanField(choices=Status.choices,default=Status.DRAFT)
  objects = models.Manager()
  published = PublishedModel()
- cat = models.ForeignKey('Category',on_delete=models.PROTECT, null=True)
+ cat = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='posts')
 
  class Meta:
   ordering = ['-time_create']
