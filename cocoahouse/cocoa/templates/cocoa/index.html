@@ -8,6 +8,10 @@
 <ul>
  {% for p in posts %}
  <li>
+  <li><div class="article-panel">
+ <p class="first">Категория: {{p.cat.name}}</p>
+ <p class="last">Дата: {{p.time_update|date:"d-m-Y H:i:s"}}</p>
+</div>
  <h2>{{p.title}}</h2>
  <p >{% autoescape off %}
 {{p.content|linebreaks|truncatewords:50}}
