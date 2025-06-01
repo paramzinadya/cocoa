@@ -1,0 +1,8 @@
+{% load cocoa_tags %}
+{% show_filials %}
+
+<ul class="filial-list">
+  {% for f in filials %}
+    <li>{{ f.address }} {% if f.month %}(Месяц: {{ f.month }}){% endif %}</li>
+  {% endfor %}
+</ul>

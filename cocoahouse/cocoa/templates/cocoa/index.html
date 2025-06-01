@@ -3,26 +3,30 @@
 {% include 'cocoa/includes/nav.html' %}
 {% load static %}
 
-
-<h1>{{title}}</h1>
+<h1>{{ title }}</h1>
 <ul>
- {% for p in posts %}
- <li>
-  <li><div class="article-panel">
- <p class="first">Категория: {{p.cat.name}}</p>
- <p class="last">Дата: {{p.time_update|date:"d-m-Y H:i:s"}}</p>
-</div>
- <h2>{{p.title}}</h2>
- <p >{% autoescape off %}
-{{p.content|linebreaks|truncatewords:50}}
-{% endautoescape %}</p>
- <p class="link-readpost"><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
- </li>
- {% endfor %}
+  {% for p in posts %}
+    <li>
+      <div class="article-panel">
+        <p class="first">Категория: {{ p.cat.name }}</p>
+        <p class="last">Дата: {{ p.time_update|date:"d-m-Y H:i:s" }}</p>
+      </div>
+
+      <h2>{{ p.title }}</h2>
+      <p>
+        {% autoescape off %}
+          {{ p.content|linebreaks|truncatewords:50 }}
+        {% endautoescape %}
+      </p>
+
+      <p class="link-readpost"><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
+      <p>Адрес: {{ p.filial.address }}</p>
+      <p>Действует до: {{ p.filial.month }}.2025</p>
+
+    </li>
+  {% endfor %}
 </ul>
+
 <img src="{% static 'cocoa/images/badian.png' %}" alt="Бадьян" class="badian">
 {% include 'cocoa/includes/nav.html' %}
-
-
-
 {% endblock %}

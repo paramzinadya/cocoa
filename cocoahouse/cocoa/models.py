@@ -20,6 +20,7 @@ class PublishedModel(models.Manager):
 
 class Post(models.Model):
  tags = models.ManyToManyField('TagPost', blank=True,related_name='tags')
+
  class Status(models.IntegerChoices):
   DRAFT = 0, 'Черновик'
   PUBLISHED = 1, 'Опубликовано'
@@ -33,6 +34,7 @@ class Post(models.Model):
  objects = models.Manager()
  published = PublishedModel()
  cat = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='posts')
+ filial = models.OneToOneField('Filial', on_delete=models.SET_NULL, null=True, blank=True, related_name='filial')
 
  class Meta:
   ordering = ['-time_create']
@@ -48,9 +50,16 @@ class Post(models.Model):
 
 class TagPost(models.Model):
  tag = models.CharField(max_length=100,db_index=True)
- slug = models.SlugField(max_length=255,unique=True, db_index=True)
+ slug = models.SlugField(max_length=255,unique=True)
 
  def get_absolute_url(self):
   return reverse('tag', kwargs={'tag_slug': self.slug})
  def __str__(self):
   return self.tag
+
+class Filial(models.Model):
+  address = models.CharField(max_length=100)
+  month = models.IntegerField(null=True)
+
+  def __str__(self):
+   return self.address
