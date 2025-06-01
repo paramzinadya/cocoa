@@ -3,7 +3,7 @@ from django import template
 register = template.Library()
 
 @register.inclusion_tag('cocoa/includes/menu_categories.html')
-def show_categories():
+def show_categorie():
     menu_items = [
         {"name": "Какао", "url": "category_cacao"},
         {"name": "Горячие напитки", "url": "category_hot_drinks"},

@@ -248,6 +248,10 @@ body {
     color: white;
 }
 
+.leftchapters p{
+    color: white;
+}
+
 /* Стили для мобильных экранов, по 3 элемента в ряд */
 @media (max-width: 768px) {
     .menu_items-list li {

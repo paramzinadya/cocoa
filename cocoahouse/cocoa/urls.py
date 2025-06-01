@@ -10,6 +10,7 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('seasons/', views.seasons, name='seasons'),
     path('login/', views.login, name='login'),
+    path('tag/<slug:tag_slug>/', views.show_tag_postlist, name='tag'),
     path('post/<slug:post_slug>/', views.show_post, name='post'),
     path('category/<int:cat_id>/', views.show_category, name='category'),
     path('category/<slug:cat_slug>/', views.show_category,name='category'),

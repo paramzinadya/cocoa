@@ -22,6 +22,7 @@ def index(request):
  'title': 'Главная страница',
  'main_menu': main_menu,
  'posts': posts,
+ 'cat_selected': 0,
  }
  return render(request, 'cocoa/index.html', context=data)
 
@@ -52,6 +53,18 @@ def show_post(request, post_slug):
  }
  return render(request, 'cocoa/post.html',
 context=data)
+
+def show_tag_postlist(request, tag_slug):
+ tag = get_object_or_404(Post, slug=tag_slug)
+ posts = tag.tags.filter(is_published=Post.Status.PUBLISHED)
+ data = {
+ 'title': f'Тег: {tag.tag}',
+ 'menu': menu,
+ 'posts': posts,
+ 'cat_selected': None,
+ }
+ return render(request, 'cocoa/index.html',context=data)
+
 
 def menu(request):
     return HttpResponse(f"<h1>Меню</h1>")
