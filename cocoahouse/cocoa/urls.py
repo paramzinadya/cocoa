@@ -18,7 +18,7 @@ urlpatterns = [
     path('post/<slug:post_slug>/', views.show_post, name='post'),
     path('category/<int:cat_id>/', views.show_category, name='category'),
     path('category/<slug:cat_slug>/', views.show_category,name='category'),
-
+    path('addpage/', views.addpage, name='addpage'),
 
     path('cacao/', views.category_cacao, name='category_cacao'),
     path('hot-drinks/', views.category_hot_drinks, name='category_hot_drinks'),

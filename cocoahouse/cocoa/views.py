@@ -7,13 +7,15 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
+from cocoa.forms import AddPostForm
 from cocoa.models import Post, Category, TagPost, Filial
 
 main_menu = [{'title': "О сайте", 'url_name': 'about'},
  {'title': "Каталог", 'url_name': 'catalog'},
  {'title': "Сезонное меню", 'url_name': 'seasons'},
  {'title': "Обратная связь", 'url_name': 'contact'},
- {'title': "Войти", 'url_name': 'login'}
+ {'title': "Войти", 'url_name': 'login'},
+ {'title': "Добавить пост", 'url_name': 'addpage'}
 ]
 
 def index(request):
@@ -100,7 +102,7 @@ def show_category(request, cat_slug):
  'posts': posts,
  'cat_selected': category.pk,
  }
- return render(request, 'women/index.html',
+ return render(request, 'cocoa/index.html',
 context=data)
 
 
@@ -134,3 +136,22 @@ def season_menu(request, month):
 
 def page_not_found(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
+
+def addpage(request):
+    if request.method == 'POST':
+        form = AddPostForm(request.POST)
+        if form.is_valid():
+            try:
+                Post.objects.create(**form.cleaned_data)
+                return redirect('home')
+            except:
+                form.add_error(None, 'Ошибка добавления поста')
+        # НЕ создаём заново form в этом else!
+    else:
+        form = AddPostForm()  # ← создаём форму при GET
+
+    return render(request, 'cocoa/addpage.html', {
+        'main_menu': menu,
+        'title': 'Добавление статьи',
+        'form': form
+    })

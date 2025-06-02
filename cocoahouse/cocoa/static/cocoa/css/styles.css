@@ -9,6 +9,7 @@ body {
 
 /* Стили для <li>, чтобы выровнять элементы по центру */
 li {
+    color: #ddd;
     text-align: center;
     display: flex;
     flex-direction: column; /* Расположить элементы по вертикали */
