@@ -1,5 +1,9 @@
 from django.urls import path, register_converter
 from cocoa import views, converters
+from django.contrib import admin
+
+admin.site.site_header = "Панель администрирования"
+admin.site.index_title = "Кафе, специализированное на какао COCOAHOUSE"
 
 register_converter(converters.MonthConverter, "month")
 
