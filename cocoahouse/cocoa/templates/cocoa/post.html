@@ -3,6 +3,9 @@
 
 
 <!-- Теги -->
+{% if post.photo %}
+        <img class="img-article-left" src="{{post.photo.url}}"></p>
+        {% endif %}
 
 {% endblock %}
 {% block content %}

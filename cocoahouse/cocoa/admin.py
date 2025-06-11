@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
+
 from .models import Post, Category
 from datetime import date
 
@@ -18,18 +20,20 @@ class FilialFilter(admin.SimpleListFilter):
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     actions = ['set_draft', 'set_published']
-    fields = ('title', 'slug', 'content', 'cat', 'filial', 'is_published')
+    fields = ('title', 'slug', 'content', 'photo', 'cat', 'filial', 'is_published')
     prepopulated_fields = {"slug": ("title",)}
-    list_display = ('title', 'time_create', 'is_published', 'cat', 'brief_info', 'days_since_publication')
+    list_display = ('title', 'time_create', 'is_published', 'post_photo', 'cat', 'days_since_publication')
     list_display_links = ('title', )
     list_editable = ('is_published', )
     ordering = ['-time_create', 'title']
     search_fields = ['title__startswith', 'cat__name']
     list_filter = [FilialFilter, 'cat__name', 'is_published']
 
-    @admin.display(description="Краткое описание")
-    def brief_info(self, post: Post):
-        return f"Описание {len(post.content)} символов."
+    @admin.display(description="Изображение")
+    def post_photo(self, post: Post):
+        if post.photo:
+            return mark_safe(f"<img src = '{post.photo.url}'width = 50 > ")
+        return "Без фото"
 
     @admin.display(description="Дней с публикации")
     def days_since_publication(self, post: Post):

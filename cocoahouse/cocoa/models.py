@@ -44,6 +44,7 @@ class Post(models.Model):
  published = PublishedModel()
  cat = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='posts', verbose_name="Категории")
  filial = models.OneToOneField('Filial', on_delete=models.SET_NULL, null=True, blank=True, related_name='Филиал')
+ photo = models.FileField(upload_to="photos/%Y/%m/%d/", default=None, blank=True, null=True, verbose_name="Фото")
 
  class Meta:
   verbose_name = 'Посты'
@@ -79,3 +80,6 @@ class Filial(models.Model):
 
   def __str__(self):
    return self.address
+
+class UploadFiles(models.Model):
+ file = models.FileField(upload_to='uploads_model')

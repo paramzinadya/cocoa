@@ -18,6 +18,13 @@ li {
     margin-bottom: 20px; /* Добавить отступ между постами */
 }
 
+.img-article-leftthumb {
+    max-width: 100px;
+    height: auto;
+    border-radius: 20px; /* необязательно, просто красиво */
+    margin-bottom: 1rem;
+}
+
 /* Стили для верхнего меню */
 ul {
     list-style: none;

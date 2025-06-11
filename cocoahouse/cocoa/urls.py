@@ -2,6 +2,12 @@ from django.urls import path, register_converter
 from cocoa import views, converters
 from django.contrib import admin
 
+# ✅ Импорт для медиа-файлов:
+from django.conf import settings
+from django.conf.urls.static import static
+
+from cocoahouse import settings
+
 admin.site.site_header = "Панель администрирования"
 admin.site.index_title = "Кафе, специализированное на какао COCOAHOUSE"
 
@@ -29,3 +35,5 @@ urlpatterns = [
     path('gift-sets/', views.category_gift_sets, name='category_gift_sets'),
 ]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

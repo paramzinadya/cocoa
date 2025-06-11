@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from cocoa.forms import AddPostForm, UploadFileForm
-from cocoa.models import Post, Category, TagPost, Filial
+from cocoa.models import Post, Category, TagPost, Filial, UploadFiles
 
 main_menu = [{'title': "О сайте", 'url_name': 'about'},
  {'title': "Каталог", 'url_name': 'catalog'},
@@ -43,7 +43,8 @@ def about(request):
     if request.method == "POST":
         form = UploadFileForm(request.POST,request.FILES)
         if form.is_valid():
-            handle_uploaded_file(form.cleaned_data['file'])
+            fp = UploadFiles(file=form.cleaned_data['file'])
+            fp.save()
     else:
         form = UploadFileForm()
     return render(request, 'cocoa/about.html',{'title': 'О сайте', 'menu': menu, 'form': form})
@@ -155,16 +156,11 @@ def page_not_found(request, exception):
 
 def addpage(request):
     if request.method == 'POST':
-        form = AddPostForm(request.POST)
+        form = AddPostForm(request.POST, request.FILES)
         if form.is_valid():
+    # print(form.cleaned_data)
             form.save()
             return redirect('home')
-        # НЕ создаём заново form в этом else!
     else:
-        form = AddPostForm()  # ← создаём форму при GET
-
-    return render(request, 'cocoa/addpage.html', {
-        'main_menu': menu,
-        'title': 'Добавление статьи',
-        'form': form
-    })
+        form = AddPostForm()
+    return render(request, 'cocoa/addpage.html',{'main_menu': main_menu, 'title': 'Добавление поста', 'form':form})

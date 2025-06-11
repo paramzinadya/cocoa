@@ -13,6 +13,9 @@
       </div>
 
       <h2>{{ p.title }}</h2>
+      {% if p.photo %}
+        <p ><img class="img-article-leftthumb" src="{{p.photo.url}}" style="max-width: 300px; height: auto; border-radius: 5px;"></p>
+        {% endif %}
       <p>
         {% autoescape off %}
           {{ p.content|linebreaks|truncatewords:50 }}
