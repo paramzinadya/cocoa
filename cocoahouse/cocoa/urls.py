@@ -14,17 +14,22 @@ admin.site.index_title = "Кафе, специализированное на к
 register_converter(converters.MonthConverter, "month")
 
 urlpatterns = [
-    path('', views.index, name='home'),
+    path('', views.CocoaHome.as_view(), name='home'),
     path('about/', views.about, name='about'),
     path('catalog/', views.catalog, name='catalog'),
     path('contact/', views.contact, name='contact'),
     path('seasons/', views.seasons, name='seasons'),
     path('login/', views.login, name='login'),
     path('tag/<slug:tag_slug>/', views.show_tag_postlist, name='tag'),
-    path('post/<slug:post_slug>/', views.show_post, name='post'),
-    path('category/<int:cat_id>/', views.show_category, name='category'),
-    path('category/<slug:cat_slug>/', views.show_category,name='category'),
-    path('addpage/', views.addpage, name='addpage'),
+    #path('post/<slug:post_slug>/', views.show_post, name='post'),
+    path('category/<slug:cat_slug>/',views.CocoaCategory.as_view(), name='category'),
+    path('post/<slug:post_slug>/', views.ShowPost.as_view(), name='post'),
+    #path('category/<int:cat_id>/', views.show_category, name='category'),
+    path('addpage/', views.AddPage.as_view(), name='addpage'),
+    path('edit/<int:pk>/', views.UpdatePage.as_view(),name='edit_page'),
+    path('edit/<slug:slug>/', views.UpdatePage.as_view(),name='edit_page'),
+    path('delete/<int:pk>', views.DeletePage.as_view(), name='delete_post'),
+
 
     path('cacao/', views.category_cacao, name='category_cacao'),
     path('hot-drinks/', views.category_hot_drinks, name='category_hot_drinks'),

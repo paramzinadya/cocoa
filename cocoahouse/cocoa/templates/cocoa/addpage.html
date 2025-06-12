@@ -1,8 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
+<style>
+  .submit-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .submit-button {
+    background-color: #3e2723; /* тёмно-коричневый, можешь заменить на black */
+    color: white;
+    font-size: 18px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .submit-button:hover {
+    background-color: #4e342e; /* чуть светлее при наведении */
+  }
+
+  form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+</style>
+
 <form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Добавить</button>
+  <div class="submit-container">
+    <button type="submit" class="submit-button">Добавить</button>
+  </div>
 </form>
 {% endblock %}

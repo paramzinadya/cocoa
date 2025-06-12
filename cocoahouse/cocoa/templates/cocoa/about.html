@@ -1,6 +1,101 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<style>
+    .post-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        margin: 40px auto;
+        max-width: 800px;
+    }
+
+    .post-item {
+        background-color: #fff8f0;
+        border: 1px solid #e0d6c6;
+        border-radius: 16px;
+        padding: 25px 35px;
+        width: 100%;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .post-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .post-item h2 {
+        margin: 0;
+        color: #000000;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .read-more-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .read-more {
+        background-color: #3e2723;
+        color: white;
+        padding: 10px 24px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        font-weight: bold;
+        border: none;
+    }
+
+    .read-more:hover {
+        background-color: #5d4037;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        margin: 40px 0;
+        flex-wrap: wrap;
+    }
+
+    .pagination a,
+    .pagination .current {
+        padding: 10px 20px;
+        background-color: #3e2723;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    .pagination a:hover {
+        background-color: #5d4037;
+    }
+
+    .pagination .current {
+        background-color: #ffcc00;
+        color: #3e2723;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #3e2723;
+        font-size: 48px;
+        font-weight: bold;
+    }
+</style>
+
 <h1>{{title}}</h1>
 
 <div class="about-content">
@@ -13,11 +108,26 @@
     <p>Спасибо, что выбираете нас. Наслаждайтесь вкусом!</p>
 </div>
 
+<div class="post-list">
+    {% for post in page_obj %}
+        <div class="post-item">
+            <h2>{{ post.title }}</h2>
+            <div class="read-more-container">
+                <a class="read-more" href="{% url 'post' post_slug=post.slug %}">Читать далее</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 
-<form action="" method="post" enctype="multipart/form-data">
- {% csrf_token %}
- {{ form.as_p }}
- <button type="submit">Отправить</button></p>
-</form>
+<div class="pagination">
+    {% for p in page_obj.paginator.page_range %}
+        {% if p == page_obj.number %}
+            <span class="current">{{ p }}</span>
+        {% else %}
+            <a href="?page={{ p }}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+</div>
+
 
 {% endblock %}
