@@ -3,6 +3,8 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 
+from cocoahouse import settings
+
 
 # Create your models here.
 
@@ -47,6 +49,10 @@ class Post(models.Model):
  filial = models.OneToOneField('Filial', on_delete=models.SET_NULL, null=True, blank=True, related_name='Филиал')
  photo = models.FileField(upload_to="photos/%Y/%m/%d/", default=None, blank=True, null=True, verbose_name="Фото")
  author = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, related_name='posts',null=True, default=None)
+ likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_posts', blank=True)
+
+ def total_likes(self):
+  return self.likes.count()
 
  class Meta:
   verbose_name = 'Посты'
@@ -66,6 +72,13 @@ class Post(models.Model):
   transliterated = translit_to_eng(self.title)
   self.slug = slugify(transliterated)
   super().save(*args, **kwargs)
+
+
+class Comment(models.Model):
+ post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+ author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+ body = models.TextField()
+ created = models.DateTimeField(auto_now_add=True)
 
 class TagPost(models.Model):
  tag = models.CharField(max_length=100,db_index=True)

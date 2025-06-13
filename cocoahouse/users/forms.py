@@ -9,6 +9,8 @@ from django.urls import reverse_lazy
 
 from django.contrib.auth import get_user_model
 
+from cocoa.models import Comment
+
 User = get_user_model()
 
 
@@ -65,3 +67,9 @@ class UserPasswordChangeForm(PasswordChangeForm):
  old_password = forms.CharField(label="Старый пароль", widget=forms.PasswordInput(attrs={'class':'form-input'}))
  new_password1 = forms.CharField(label="Новый пароль", widget=forms.PasswordInput(attrs={'class': 'form-input'}))
  new_password2 = forms.CharField(label="Подтверждение пароля", widget=forms.PasswordInput(attrs={'class': 'forminput'}))
+
+
+class CommentForm(forms.ModelForm):
+ class Meta:
+  model = Comment
+  fields = ['body']

@@ -18,6 +18,7 @@ from django.views.generic.edit import DeleteView
 from django.core.paginator import Paginator
 
 from cocoa.utils import DataMixin
+from users.forms import CommentForm
 
 main_menu = [{'title': "О сайте", 'url_name': 'about'},
  {'title': "Каталог", 'url_name': 'catalog'},
@@ -110,7 +111,37 @@ class ShowPost(DataMixin, DetailView):
 
  def get_context_data(self, **kwargs):
      context = super().get_context_data(**kwargs)
-     return self.get_mixin_context(context,title=context['post'])
+     post = context['post']
+     context = self.get_mixin_context(context, title=post.title)
+     context['comments'] = post.comments.all().order_by('-created')
+     context['form'] = CommentForm()
+     context['liked'] = self.request.user in post.likes.all()
+     return context
+
+ def post(self, request, *args, **kwargs):
+     self.object = self.get_object()
+     post = self.object
+
+     # Лайк
+     if 'like' in request.POST:
+         if request.user.is_authenticated:
+             if request.user in post.likes.all():
+                 post.likes.remove(request.user)
+             else:
+                 post.likes.add(request.user)
+         return redirect('post', post_slug=post.slug)
+
+     # Комментарий
+     if 'comment' in request.POST:
+         form = CommentForm(request.POST)
+         if form.is_valid() and request.user.is_authenticated:
+             comment = form.save(commit=False)
+             comment.post = post
+             comment.author = request.user
+             comment.save()
+         return redirect('post', post_slug=post.slug)
+
+     return redirect('post', post_slug=post.slug)
 
  def get_object(self, queryset=None):
      return get_object_or_404(Post.published,slug=self.kwargs[self.slug_url_kwarg])
@@ -207,4 +238,3 @@ def season_menu(request, month):
 
 def page_not_found(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
-
