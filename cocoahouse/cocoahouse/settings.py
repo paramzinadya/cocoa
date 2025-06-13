@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'cocoa.apps.CocoaConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +65,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'users.context_processors.get_cocoa_context',
             ],
         },
     },
@@ -102,6 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -129,6 +132,31 @@ STATIC_URL = 'static/'
 
 # Куда Django будет собирать статические файлы после collectstatic
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+AUTHENTICATION_BACKENDS = [
+ 'django.contrib.auth.backends.ModelBackend',
+ 'users.authentication.EmailAuthBackend',
+]
+
+DEFAULT_USER_IMAGE = MEDIA_URL + 'users/default.png'
+
+AUTH_USER_MODEL = 'users.User'
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+EMAIL_HOST = "smtp.yandex.ru"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "paramzina.web@yandex.ru"
+EMAIL_USE_SSL = True
+EMAIL_HOST_PASSWORD = "beisjqykclqngzbz"
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+LOGIN_URL = 'users:login'
 
 
 # Default primary key field type

@@ -17,5 +17,8 @@ def show_categories(cat_selected_id=0):
 def show_all_tags():
  return {"tags": TagPost.objects.all()}
 
+@register.simple_tag
+def get_menu():
+ return views.main_menu
 
 

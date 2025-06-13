@@ -1,5 +1,8 @@
 from calendar import month
 from datetime import datetime
+
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.template.loader import render_to_string
 from django.core.exceptions import ValidationError
 import uuid
@@ -20,7 +23,6 @@ main_menu = [{'title': "О сайте", 'url_name': 'about'},
  {'title': "Каталог", 'url_name': 'catalog'},
  {'title': "Сезонное меню", 'url_name': 'seasons'},
  {'title': "Обратная связь", 'url_name': 'contact'},
- {'title': "Войти", 'url_name': 'login'},
  {'title': "Добавить пост", 'url_name': 'addpage'}
 ]
 class CocoaHome(DataMixin, ListView):
@@ -58,6 +60,7 @@ def handle_uploaded_file(f):
         for chunk in f.chunks():
             destination.write(chunk)
 
+@login_required
 def about(request):
     contact_list = Post.published.all()
     paginator = Paginator(contact_list, 3)
@@ -79,6 +82,7 @@ def catalog(request):
 def seasons(request):
  return HttpResponse("Сезонное меню")
 
+@permission_required(perm='cocoa.view_cocoa',raise_exception=True)
 def contact(request):
  return HttpResponse("Обратная связь")
 
@@ -111,13 +115,17 @@ class ShowPost(DataMixin, DetailView):
  def get_object(self, queryset=None):
      return get_object_or_404(Post.published,slug=self.kwargs[self.slug_url_kwarg])
 
-class AddPage(DataMixin, FormView):
+class AddPage(PermissionRequiredMixin, LoginRequiredMixin, DataMixin, FormView):
  form_class = AddPostForm
  template_name = 'cocoa/addpage.html'
  success_url = reverse_lazy('home')
+ permission_required = 'cocoa.add_post'
  def form_valid(self, form):
-     form.save()
+     w = form.save(commit=False)
+     w.author = self.request.user
+     w.save()  # <--- вот этого не хватало
      return super().form_valid(form)
+
 
 class UpdatePage(DataMixin, UpdateView):
  model = Post

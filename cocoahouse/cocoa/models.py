@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
@@ -45,6 +46,7 @@ class Post(models.Model):
  cat = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='posts', verbose_name="Категории")
  filial = models.OneToOneField('Filial', on_delete=models.SET_NULL, null=True, blank=True, related_name='Филиал')
  photo = models.FileField(upload_to="photos/%Y/%m/%d/", default=None, blank=True, null=True, verbose_name="Фото")
+ author = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, related_name='posts',null=True, default=None)
 
  class Meta:
   verbose_name = 'Посты'
