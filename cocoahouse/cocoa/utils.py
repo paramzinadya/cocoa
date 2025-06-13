@@ -1,6 +1,5 @@
 main_menu = [{'title': "О сайте", 'url_name': 'about'},
  {'title': "Каталог", 'url_name': 'catalog'},
- {'title': "Сезонное меню", 'url_name': 'seasons'},
  {'title': "Обратная связь", 'url_name': 'contact'},
  {'title': "Добавить пост", 'url_name': 'addpage'}
 ]
@@ -8,7 +7,7 @@ main_menu = [{'title': "О сайте", 'url_name': 'about'},
 class DataMixin:
     title_page = None
     extra_context = {}
-    paginate_by = 1
+    paginate_by = 2
 
     def __init__(self):
         if self.title_page:

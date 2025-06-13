@@ -83,9 +83,11 @@ def catalog(request):
 def seasons(request):
  return HttpResponse("Сезонное меню")
 
-@permission_required(perm='cocoa.view_cocoa',raise_exception=True)
+@permission_required(perm='cocoa.view_cocoa', raise_exception=True)
 def contact(request):
- return HttpResponse("Обратная связь")
+    return render(request, 'cocoa/contact.html', {
+        'title': 'Обратная связь'
+    })
 
 def login(request):
  return HttpResponse("Вход в аккаунт")

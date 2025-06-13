@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load menu_tags %}
+
 {% block content %}
-<h1>{{title}}</h1>
+<h1 style="text-align: center;">{{ title }}</h1>
 
-<div class="categories">
-        {% show_categories %}
-    </div>
-
+<div class="categories-centered">
+    {% show_categorie %}
+</div>
 {% endblock %}
